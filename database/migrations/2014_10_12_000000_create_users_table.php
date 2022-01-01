@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->datetime('last_conduit_login')->nullable();
 
             $table->boolean('conduit_user')->default(true)->nullable(false);
-            $table->json('roles');
+            $table->json('roles')->nullable();
 
             $table->string('email')->unique();       // Synced from Dolibarr
             $table->timestamp('email_verified_at')->nullable();
@@ -36,12 +36,12 @@ class CreateUsersTable extends Migration
             $table->integer('dolibarr_id')->nullable();
             $table->integer('dolibarr_entity')->nullable();
             $table->string('dolibarr_job')->nullable();
-            $table->datetime('dolibarr_last_login');
-            $table->datetime('dolibarr_last_sync');
+            $table->datetime('dolibarr_last_login')->nullable();
+            $table->datetime('dolibarr_last_sync')->nullable();
 
             // Quickbooks Time Fields
             $table->integer('qbt_id')->nullable();
-            $table->datetime('qbt_last_sync');
+            $table->datetime('qbt_last_sync')->nullable();
         });
     }
 

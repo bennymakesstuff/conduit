@@ -14,4 +14,8 @@ class Projects extends Model
         'dolibarr_id',
         'qbt_id'
     ];
+
+    protected $hidden = [
+      'id'
+    ];
 }
