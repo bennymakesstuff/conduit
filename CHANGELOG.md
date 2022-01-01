@@ -9,6 +9,9 @@ This project provides a central API and Dashboard for communication between appl
 - Conduit database configuration
 - Models for User and Project
 - Console tasks for checking connections and stats
+- Adds Discord log channels (general and error)
+- Adds Mail system
+- Adds console tasks for testing mail and discord notifications
 ### Changes
 ### Removes
 ### Fixes
