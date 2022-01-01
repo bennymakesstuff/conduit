@@ -12,6 +12,8 @@ This project provides a central API and Dashboard for communication between appl
 - Adds Discord log channels (general and error)
 - Adds Mail system
 - Adds console tasks for testing mail and discord notifications
+- Adds User routes for create, login
+- Adds middleware to check user auth token
 ### Changes
 ### Removes
 ### Fixes
