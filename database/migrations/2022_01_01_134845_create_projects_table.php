@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,35 +13,18 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table) {
 
-            // Conduit Fields
             self::addAuditablesToTable($table);
-            $table->rememberToken();
-            $table->datetime('last_conduit_login')->nullable();
-
-            $table->boolean('conduit_user')->default(true)->nullable(false);
-            $table->json('roles');
-
-            $table->string('email')->unique();       // Synced from Dolibarr
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');              // Synced from Dolibarr
-
-            $table->string('firstname')->nullable(); // Synced from Dolibarr
-            $table->string('lastname')->nullable();  // Synced from Dolibarr
-            $table->integer('mobile')->nullable();   // Synced from Dolibarr
-
-            // Dolibarr Fields
-            $table->string('dolibarr_username')->nullable();
+            $table->string('title', 255);
+            $table->string('dolibarr_ref', 50);
+            $table->longText('description');
             $table->integer('dolibarr_id')->nullable();
             $table->integer('dolibarr_entity')->nullable();
-            $table->string('dolibarr_job')->nullable();
-            $table->datetime('dolibarr_last_login');
-            $table->datetime('dolibarr_last_sync');
-
-            // Quickbooks Time Fields
             $table->integer('qbt_id')->nullable();
-            $table->datetime('qbt_last_sync');
+            $table->datetime('dolibarr_last_sync')->nullable();
+            $table->datetime('qbt_last_sync')->nullable();
+
         });
     }
 
@@ -52,7 +35,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('projects');
     }
 
     /**
