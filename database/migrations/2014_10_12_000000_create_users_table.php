@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('conduit_user')->default(true)->nullable(false);
             $table->json('roles')->nullable();
 
-            $table->string('email')->unique();       // Synced from Dolibarr
+            $table->string('email')->unique()->nullable();       // Synced from Dolibarr
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');              // Synced from Dolibarr
 
@@ -33,9 +33,9 @@ class CreateUsersTable extends Migration
 
             // Dolibarr Fields
             $table->string('dolibarr_username')->nullable();
-            $table->integer('dolibarr_id')->nullable();
+            $table->integer('dolibarr_id')->unique()->nullable();
             $table->integer('dolibarr_entity')->nullable();
-            $table->string('dolibarr_job')->nullable();
+            $table->jsonb('dolibarr_json')->nullable();
             $table->datetime('dolibarr_last_login')->nullable();
             $table->datetime('dolibarr_last_sync')->nullable();
 

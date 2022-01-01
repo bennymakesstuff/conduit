@@ -87,7 +87,7 @@ class UserController extends Controller
         'data' => $user_data
       ];
 
-      Log::channel('discord_errors')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
+      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
         $error['status'],
         PHP_EOL.PHP_EOL,
         $error['message'],
