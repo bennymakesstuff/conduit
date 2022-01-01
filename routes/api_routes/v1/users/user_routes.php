@@ -1,28 +1,57 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
 | V1 API User Routes
 |--------------------------------------------------------------------------
 */
+/**
+ * Registers a user
+ */
+Route::post('/register', [AuthController::class, 'register'])
+  ->name('register');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
+/**
+ * Logs the user in with the provided details
+ */
+Route::post('/login', [AuthController::class, 'login'])
+  ->name('login');
+
+
+/**
+ * Returns a message for unsuccessful authentication
+ */
+Route::get('/login-unsuccessful', function (Request $request)
+{
+  $login_error = [
+    'status' => 'INVALID CREDENTIALS',
+    'message' => 'Your credentials are either expired or invalid'
+  ];
+
+  return $login_error;
+})->name('login-unsuccessful');
+
+
+/**
+ * Returns the user object of the currently authenticated user based on bearer token
+ */
+Route::middleware('auth:sanctum')
+  ->get('/user', function (Request $request)
+{
     return $request->user();
 });
 
-Route::get('/user', function (Request $request) {
-  return $request->user();
-});
+/**
+ * Creates a new user in the database
+ */
+Route::middleware('auth:sanctum')
+  ->post('/user/create', [UserController::class, 'newUser'])
+  ->name('user-create');
 
-Route::post('/login', function (Request $request) {
-  return 'Login Route';
-});
 
-Route::post('/tokens/create', function (Request $request) {
-  $token = $request->user()->createToken($request->token_name);
-
-  return ['token' => $token->plainTextToken];
-});
