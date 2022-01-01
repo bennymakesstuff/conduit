@@ -55,7 +55,18 @@ Artisan::command('conduit:check-email', function () {
 Artisan::command('conduit:check-discord', function () {
   $this->comment('Checking the Conduit Discord Logger');
 
-  Log::info('Discord Logger is working as expected.');
+  Log::channel('discord')->info('Discord Logger is working as expected.');
 
 })->purpose('Sends an notification to test the Conduit Discord Logger');
+
+
+/**
+ * Test Discord Error Logger
+ */
+Artisan::command('conduit:check-discord-error', function () {
+  $this->comment('Checking the Conduit Discord Error Logger');
+
+  Log::channel('discord_errors')->warning('Discord Error Logger is working as expected.');
+
+})->purpose('Sends an notification to test the Conduit Discord Error Logger');
 

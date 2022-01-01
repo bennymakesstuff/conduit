@@ -120,6 +120,13 @@ return [
           'level'  => 'debug',
           'url'    => env('LOG_DISCORD_WEBHOOK_URL'),
         ],
+
+        'discord_errors' => [
+          'driver' => 'custom',
+          'via'    => MarvinLabs\DiscordLogger\Logger::class,
+          'level'  => 'debug',
+          'url'    => env('LOG_DISCORD_ERRORS_WEBHOOK_URL'),
+        ],
     ],
 
 ];
