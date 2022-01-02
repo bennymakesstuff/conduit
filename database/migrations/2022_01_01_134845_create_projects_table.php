@@ -16,14 +16,20 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
 
             self::addAuditablesToTable($table);
-            $table->string('title', 255);
-            $table->string('dolibarr_ref', 50);
-            $table->longText('description');
-            $table->integer('dolibarr_id')->nullable();
+
+          // Dolibarr Fields
+            $table->string('title', 255)->nullable();
+            $table->string('dolibarr_ref', 50)->nullable();
+            $table->longText('description')->nullable;
+            $table->integer('dolibarr_id')->nullable()->unique();
             $table->integer('dolibarr_entity')->nullable();
-            $table->integer('qbt_id')->nullable();
+            $table->jsonb('dolibarr_json')->nullable();
             $table->datetime('dolibarr_last_sync')->nullable();
+
+          // Quickbooks Time Fields
+            $table->integer('qbt_id')->nullable();
             $table->datetime('qbt_last_sync')->nullable();
+            $table->jsonb('qbt_json')->nullable();
 
         });
     }
