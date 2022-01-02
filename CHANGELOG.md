@@ -15,6 +15,7 @@ This project provides a central API and Dashboard for communication between appl
 - Adds User routes for create, login
 - Adds middleware to check user auth token
 - Adds Users Sync from Dolibarr (FirstName, Lastname, Email, Password, Username, JSON Blob of Object)
+- Adds Projects Sync from Dolibarr
 ### Changes
 ### Removes
 ### Fixes
