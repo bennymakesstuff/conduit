@@ -77,6 +77,7 @@ Artisan::command('dolibarr:sync-users', function () {
  */
 Artisan::command('dolibarr:sync-projects', function () {
   $this->comment('Running Dolibarr Projects Sync Task');
+  Dolibarr::syncProjects($this);
 })->purpose('Sync Projects from Dolibarr to Conduit');
 
 

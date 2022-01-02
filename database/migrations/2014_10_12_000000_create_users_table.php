@@ -42,6 +42,7 @@ class CreateUsersTable extends Migration
             // Quickbooks Time Fields
             $table->integer('qbt_id')->nullable();
             $table->datetime('qbt_last_sync')->nullable();
+            $table->jsonb('qbt_json')->nullable();
         });
     }
 
