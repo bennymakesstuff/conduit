@@ -1,5 +1,6 @@
 <?php
 
+use App\AncillaryApps\QuickbooksTime;
 use App\Mail\TestMail;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -69,4 +70,18 @@ Artisan::command('conduit:check-discord-error', function () {
   Log::channel('discord_errors')->warning('Discord Error Logger is working as expected.');
 
 })->purpose('Sends an notification to test the Conduit Discord Error Logger');
+
+
+/**
+ * Test Web Request
+ */
+Artisan::command('conduit:check-web-request', function () {
+  $this->comment('Checking the Conduit Web Request');
+
+  $qbt_instance = new QuickbooksTime();
+  $result = $qbt_instance->getQBTUsers();
+
+  $this->comment($result);
+
+})->purpose('Checks that web requests are working within Conduit');
 

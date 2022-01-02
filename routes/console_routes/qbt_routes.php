@@ -1,5 +1,6 @@
 <?php
 
+use App\AncillaryApps\QuickbooksTime;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
@@ -30,3 +31,29 @@ Artisan::command('quickbooks:check-connection', function () {
     die;
   }
 })->purpose('Checks the status of the Conduit Database Connection');
+
+
+/**
+ * Retrieve Users from QBT
+ */
+Artisan::command('quickbooks:get-users', function () {
+  $this->comment('Collecting Users from Quickbooks Time');
+
+  $qbt = new QuickbooksTime();
+  $users = $qbt->getQBTUsers($this);
+
+
+})->purpose('Checks the status of the Conduit Database Connection');
+
+
+/**
+ * Sync all users with QBT
+ */
+Artisan::command('quickbooks:sync-users', function () {
+  $this->comment('Syncing all users in Quickbooks Time');
+
+  $qbt = new QuickbooksTime();
+  $users = $qbt->syncQBTUsers($this);
+
+})->purpose('Syncs all users with Quickbooks Time');
+

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('conduit_user')->default(true)->nullable(false);
             $table->json('roles')->nullable();
 
-            $table->string('email')->unique()->nullable();       // Synced from Dolibarr
+            $table->string('email')->unique()->nullable();       // Synced from Dolibarr// Synced from Dolibarr
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');              // Synced from Dolibarr
 
