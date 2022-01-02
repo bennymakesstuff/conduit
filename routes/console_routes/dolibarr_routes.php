@@ -87,6 +87,7 @@ Artisan::command('dolibarr:sync-projects', function () {
  */
 Artisan::command('dolibarr:sync-workorders', function () {
   $this->comment('Running Dolibarr Workorder Sync Task');
+  Dolibarr::syncWorkorders($this);
 })->purpose('Sync Workorders from Dolibarr to Conduit');
 
 

@@ -21,7 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('title', 255)->nullable();
             $table->string('dolibarr_ref', 50)->nullable();
             $table->longText('description')->nullable;
-            $table->integer('dolibarr_id')->nullable()->unique();
+            $table->integer('dolibarr_id')->unique()->nullable();
             $table->integer('dolibarr_entity')->nullable();
             $table->jsonb('dolibarr_json')->nullable();
             $table->datetime('dolibarr_last_sync')->nullable();
