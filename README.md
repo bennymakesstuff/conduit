@@ -23,11 +23,31 @@ This was chosen for the following reasons:
 - Sync Tasks (Workorders)
 - Sync Project / User Mapping
 
+
+
 ### Setup
 
 
 ### Tasks
+All tasks are prepended with "php artisan" when running from console
+#### Laravel Tasks
+- ***cache:clear*** - Clears the laravel cache for clearing .env and route issues
 
+#### Dolibarr Tasks
+- ***dolibarr:sync-users*** - Syncs users from Dolibarr to Conduit
+- ***dolibarr:sync-projects*** - Syncs users from Dolibarr to projects
+- ***dolibarr:sync-workorders*** - Syncs users from Dolibarr to workorders
+- ***dolibarr:check-connection*** - Checks the status of the connected Dolibarr database
+
+#### Quickbooks Time Tasks
+- ***quickbooks:sync-users*** - Syncs users from Conduit to Quickbooks
+- ***quickbooks:sync-projects*** - Syncs projects from Conduit to Quickbooks
+
+#### Conduit Tasks
+- ***conduit:check-connection*** - Checks the status of the Conduit database
+- ***conduit:check-email*** - Fires of a Test Email
+- ***conduit:check-discord*** - Fires of a Test Discord Notification to the logger channel
+- ***conduit:check-discord-error*** - Fires of a Test Discord Notification to the error channel
 
 ### Bugs
 

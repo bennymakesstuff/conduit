@@ -61,6 +61,7 @@ class Dolibarr
             'lastname' => $dolibarr_user->lastname,
             'email' => $dolibarr_user->email,
             'password' => $dolibarr_user->pass,
+            'dolibarr_username' => $dolibarr_user->login,
             //'password' => $dolibarr_user->pass_crypted
             'uuid' => $uuid_factory->fromDateTime(new DateTime('now')),
             'dolibarr_json' => json_encode($dolibarr_user),
@@ -73,6 +74,7 @@ class Dolibarr
               'firstname',
               'lastname',
               'password',
+              'dolibarr_username',
               'email',
               'dolibarr_json',
               'dolibarr_last_sync'
