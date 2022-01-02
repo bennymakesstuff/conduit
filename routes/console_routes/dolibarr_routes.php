@@ -1,5 +1,6 @@
 <?php
 
+use App\AncillaryApps\Dolibarr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
@@ -62,10 +63,11 @@ Artisan::command('dolibarr:stats', function () {
 
 
 /**
- * Syncs users from Dolibarr into Conduit
+ * Syncs Users from Dolibarr into Conduit
  */
 Artisan::command('dolibarr:sync-users', function () {
   $this->comment('Running Dolibarr User Sync Task');
+  Dolibarr::syncUsers($this);
 })->purpose('Sync Users from Dolibarr to Conduit');
 
 
