@@ -2,6 +2,7 @@
 
 namespace App\AncillaryApps;
 
+use App\Models\Projects;
 use App\Models\User;
 use App\Models\Workorders;
 use DateTime;
@@ -89,7 +90,11 @@ class QuickbooksTime
     return '';
   }
 
-
+  /**
+   * Syncs all never synced users to Quickbooks
+   * @param $route_instance
+   * @return string|null
+   */
   public function syncQBTUsers($route_instance)
   {
 
@@ -136,6 +141,58 @@ class QuickbooksTime
 
 
     $route_instance->comment('Finished Quickbooks Time User Sync');
+    return '';
+  }
+
+
+
+
+  /**
+   * Syncs all never synced projects to Quickbooks
+   * @param $route_instance
+   * @return string|null
+   */
+  public function syncQBTProjects($route_instance)
+  {
+    $projects = Projects::all()
+      ->whereNull('qbt_last_sync');
+
+    if (is_null($projects)) return null;
+
+    $route_instance->comment('Syncing ' . count($projects) . ' Projects to Quickbooks Time');
+
+    foreach ($projects as $project) {
+
+      $route_instance->comment('Syncing Project: (' . $project->dolibarr_ref . ') ' . $project->title);
+
+      $qbt_project = (object)[
+        "parent_id" => 0,
+        "name" => substr($project->title,0,64),
+        "short_code" => $project->dolibarr_ref,
+      ];
+
+      $params = [$qbt_project];
+
+      $response = self::makeRequest('jobcodes', $params, self::REQUEST_TYPE_POST);
+
+      // Return null if there is no response
+      if ($response === null) return $response;
+
+      if ($response->successful()) {
+        $route_instance->comment('Success');
+        $results = $response->object()->results;
+
+      } elseif ($response->failed()) {
+        $route_instance->comment('Failure');
+      }
+
+      $project->qbt_last_sync = new DateTime('now');
+      $project->save();
+
+    }
+
+
+    $route_instance->comment('Finished Quickbooks Time Project Sync');
     return '';
   }
 }

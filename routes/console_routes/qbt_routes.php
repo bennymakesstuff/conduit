@@ -57,3 +57,16 @@ Artisan::command('quickbooks:sync-users', function () {
 
 })->purpose('Syncs all users with Quickbooks Time');
 
+
+
+/**
+ * Sync all projects with QBT
+ */
+Artisan::command('quickbooks:sync-projects', function () {
+  $this->comment('Syncing all projects in Quickbooks Time');
+
+  $qbt = new QuickbooksTime();
+  $projects = $qbt->syncQBTProjects($this);
+
+})->purpose('Syncs all projects with Quickbooks Time');
+
