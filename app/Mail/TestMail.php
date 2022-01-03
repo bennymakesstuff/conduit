@@ -30,7 +30,7 @@ class TestMail extends Mailable
     {
         return $this
           ->subject('Test Welcome Email')
-          ->from('me@benbroad.com')
+          ->from(env('MAIL_DEFAULT_FROM'))
           ->view('emails.general.test')
           ->with([
             'name' => $this->name
