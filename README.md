@@ -1,8 +1,6 @@
-# Conduit - Finch Motor Company
+# Conduit Server
 
-Conduit is an application that provides connectivity between Finch resources and applications.
-
-For initial rollout it will provide connectivity in the form of syncing between Dolibarr and Quickbooks Time.
+Conduit is an application that acts an an API.
 
 ### Technologies
 Conduit uses the Laravel framework for the application.
@@ -15,33 +13,18 @@ This was chosen for the following reasons:
 - Eloquent ORM abstracts away the need for complex SQL and allows for migrations
 
 ### Features
-#### Quickbooks Time Sync
-
-- Sync Users
-- Sync Time Clockings (Packets)
-- Sync Projects
-- Sync Tasks (Workorders)
-- Sync Project / User Mapping
-
 
 
 ### Setup
-
+***Run Server***
+```php
+php artisan serve
+```
 
 ### Tasks
 All tasks are prepended with "php artisan" when running from console
 #### Laravel Tasks
 - ***cache:clear*** - Clears the laravel cache for clearing .env and route issues
-
-#### Dolibarr Tasks
-- ***dolibarr:sync-users*** - Syncs users from Dolibarr to Conduit
-- ***dolibarr:sync-projects*** - Syncs users from Dolibarr to projects
-- ***dolibarr:sync-workorders*** - Syncs users from Dolibarr to workorders
-- ***dolibarr:check-connection*** - Checks the status of the connected Dolibarr database
-
-#### Quickbooks Time Tasks
-- ***quickbooks:sync-users*** - Syncs users from Conduit to Quickbooks
-- ***quickbooks:sync-projects*** - Syncs projects from Conduit to Quickbooks
 
 #### Conduit Tasks
 - ***conduit:check-connection*** - Checks the status of the Conduit database
