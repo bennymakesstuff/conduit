@@ -4,9 +4,8 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
-require_once 'console_routes/dolibarr_routes.php';
 require_once 'console_routes/conduit_routes.php';
-require_once 'console_routes/qbt_routes.php';
+
 /*
 |--------------------------------------------------------------------------
 | Console Routes
