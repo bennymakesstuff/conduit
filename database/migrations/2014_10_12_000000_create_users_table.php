@@ -20,29 +20,16 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->datetime('last_conduit_login')->nullable();
 
-            $table->boolean('conduit_user')->default(true)->nullable(false);
             $table->json('roles')->nullable();
 
-            $table->string('email')->unique()->nullable();       // Synced from Dolibarr// Synced from Dolibarr
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');              // Synced from Dolibarr
+            $table->string('password');
 
-            $table->string('firstname')->nullable(); // Synced from Dolibarr
-            $table->string('lastname')->nullable();  // Synced from Dolibarr
-            $table->integer('mobile')->nullable();   // Synced from Dolibarr
+            $table->string('firstname')->nullable();
+            $table->string('lastname')->nullable();
+            $table->integer('mobile')->nullable();
 
-            // Dolibarr Fields
-            $table->string('dolibarr_username')->nullable();
-            $table->integer('dolibarr_id')->unique()->nullable();
-            $table->integer('dolibarr_entity')->nullable();
-            $table->jsonb('dolibarr_json')->nullable();
-            $table->datetime('dolibarr_last_login')->nullable();
-            $table->datetime('dolibarr_last_sync')->nullable();
-
-            // Quickbooks Time Fields
-            $table->integer('qbt_id')->nullable();
-            $table->datetime('qbt_last_sync')->nullable();
-            $table->jsonb('qbt_json')->nullable();
         });
     }
 

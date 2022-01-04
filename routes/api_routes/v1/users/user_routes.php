@@ -16,13 +16,17 @@ use App\Http\Controllers\AuthController;
 Route::post('/register', [AuthController::class, 'register'])
   ->name('register');
 
-
 /**
  * Logs the user in with the provided details
  */
 Route::post('/login', [AuthController::class, 'login'])
   ->name('login');
 
+/**
+ * Reset password
+ */
+Route::post('/recover-account', [AuthController::class, 'recoverAccount'])
+  ->name('recover-account');
 
 /**
  * Returns a message for unsuccessful authentication
@@ -37,6 +41,12 @@ Route::get('/login-unsuccessful', function (Request $request)
   return $login_error;
 })->name('login-unsuccessful');
 
+
+Route::middleware('auth:sanctum')
+  ->get('/user/details', function (Request $request)
+  {
+    return $request->user();
+  });
 
 /**
  * Returns the user object of the currently authenticated user based on bearer token
