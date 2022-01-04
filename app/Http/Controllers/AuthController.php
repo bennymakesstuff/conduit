@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PasswordResetEmail;
 use App\Mail\RecoveryEmail;
 use App\Mail\TestMail;
 use App\Models\User;
@@ -9,10 +10,12 @@ use DateTime;
 use Exception;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
@@ -139,10 +142,6 @@ class AuthController extends Controller
     /** @var User $user */
     $user = $check_users->first();
 
-//    $status = Password::sendResetLink(
-//      $request->only(['email'])
-//    );
-
     $password_reset_token = Password::createToken($user);
 
     try {
@@ -156,6 +155,54 @@ class AuthController extends Controller
       return response()->json([
         'status' => false,
         'message' => 'Password reset request could not be sent.',
+      ]);
+    }
+  }
+
+
+  public function resetPassword(Request $request)
+  {
+    $validatedData = $request->validate([
+      'email' => 'required|string',
+      'password' => 'required|string',
+      'token' => 'required|string'
+    ]);
+
+    Log::info(sprintf('Password reset'));
+
+    try {
+
+      $status = Password::reset(
+        $request->only('email', 'password', 'token'),
+        function ($user, $password) {
+          $user->forceFill([
+            'password' => Hash::make($password)
+          ])->setRememberToken(Str::random(60));
+
+          $user->save();
+
+          event(new PasswordReset($user));
+        }
+      );
+
+
+      $user = (new User)->where('email', $request->get('email'))->firstOrFail();
+
+      Log::info($user['email']);
+
+//      if ($status === Password::PASSWORD_RESET) {
+//        Mail::to($request->get('email'))->send(new PasswordResetEmail($user));
+//      }
+
+      return response()->json([
+        'status' => true,
+        'message' => 'Password reset request successful.',
+      ]);
+    }
+    catch (Exception $exception) {
+      return response()->json([
+        'status' => false,
+        'message' => 'Password reset could not be completed.',
       ]);
     }
   }

@@ -28,6 +28,7 @@ This project provides a central API and Dashboard for communication between appl
 - Adds console tasks for testing mail and discord notifications
 - Adds User routes for create, login
 - Adds middleware to check user auth token
+- Adds password reset functionality for logged out users
 ### Changes
 ### Removes
 ### Fixes
