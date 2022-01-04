@@ -1,6 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
+  <meta charset="utf-8"/>
+  <!--[if mso]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+      <o:AllowPNG/>
+    </o:OfficeDocumentSettings>
+  </xml><![endif]-->
+  <!--[if !mso]><!-->
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css"/>
+  <!--<![endif]-->
   <!--[if (gte mso 9)|(IE)]>
   <xml>
     <o:OfficeDocumentSettings>
@@ -17,86 +29,523 @@
   <meta name="format-detection" content="address=no"> <!-- disable auto address linking in iOS -->
   <meta name="format-detection" content="email=no"> <!-- disable auto email linking in iOS -->
   <meta name="author" content="Simple-Pleb.com">
+
   <title>{{ __('mail.Recovery Title') }} | {{ config('app.name') }}</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-  <style type="text/css">
-    /*Basics*/
-    body {margin:0px !important; padding:0px !important; display:block !important; min-width:100% !important; width:100% !important; -webkit-text-size-adjust:none;}
-    table {border-spacing:0; mso-table-lspace:0pt; mso-table-rspace:0pt;}
-    table td {border-collapse: collapse;mso-line-height-rule:exactly;}
-    td img {-ms-interpolation-mode:bicubic; width:auto; max-width:auto; height:auto; margin:auto; display:block!important; border:0px;}
-    td p {margin:0; padding:0;}
-    td div {margin:0; padding:0;}
-    td a {text-decoration:none; color: inherit;}
+    a[x-apple-data-detectors] {
+      color: inherit !important;
+      text-decoration: inherit !important;
+    }
 
-    /*Outlook*/
-    .ExternalClass {width: 100%;}
-    .ExternalClass,.ExternalClass p,.ExternalClass span,.ExternalClass font,.ExternalClass td,.ExternalClass div {line-height:inherit;}
-    .ReadMsgBody {width:100%; background-color: #ffffff;}
+    #MessageViewBody a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    /* iOS BLUE LINKS */
-    a[x-apple-data-detectors] {color:inherit !important; text-decoration:none !important; font-size:inherit !important; font-family:inherit !important; font-weight:inherit !important; line-height:inherit !important;}
+    p {
+      line-height: inherit
+    }
 
-    /*Gmail blue links*/
-    u + #body a {color:inherit;text-decoration:none;font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;}
+    @media (max-width: 520px) {
+      .icons-inner {
+        text-align: center;
+      }
 
-    /*Buttons fix*/
-    .undoreset a, .undoreset a:hover {text-decoration:none !important;}
-    .yshortcuts a {border-bottom:none !important;}
-    .ios-footer a {color:#aaaaaa !important;text-decoration:none;}
+      .icons-inner td {
+        margin: 0 auto;
+      }
 
-    /*Responsive*/
-    @media screen and (max-width: 799px) {
-      table.row {width: 100%!important;max-width: 100%!important;}
-      td.row {width: 100%!important;max-width: 100%!important;}
-      .img-responsive img {width:100%!important;max-width: 100%!important;height: auto!important;margin: auto;}
-      .center-float {float: none!important;margin:auto!important;}
-      .center-text{text-align: center!important;}
-      .container-padding {width: 100%!important;padding-left: 15px!important;padding-right: 15px!important;}
-      .container-padding10 {width: 100%!important;padding-left: 10px!important;padding-right: 10px!important;}
-      .hide-mobile {display: none!important;}
-      .menu-container {text-align: center !important;}
-      .autoheight {height: auto!important;}
-      .m-padding-10 {margin: 10px 0!important;}
-      .m-padding-15 {margin: 15px 0!important;}
-      .m-padding-20 {margin: 20px 0!important;}
-      .m-padding-30 {margin: 30px 0!important;}
-      .m-padding-40 {margin: 40px 0!important;}
-      .m-padding-50 {margin: 50px 0!important;}
-      .m-padding-60 {margin: 60px 0!important;}
-      .m-padding-top10 {margin: 30px 0 0 0!important;}
-      .m-padding-top15 {margin: 15px 0 0 0!important;}
-      .m-padding-top20 {margin: 20px 0 0 0!important;}
-      .m-padding-top30 {margin: 30px 0 0 0!important;}
-      .m-padding-top40 {margin: 40px 0 0 0!important;}
-      .m-padding-top50 {margin: 50px 0 0 0!important;}
-      .m-padding-top60 {margin: 60px 0 0 0!important;}
-      .m-height10 {font-size:10px!important;line-height:10px!important;height:10px!important;}
-      .m-height15 {font-size:15px!important;line-height:15px!important;height:15px!important;}
-      .m-height20 {font-size:20px!important;line-height:20px!important;height:20px!important;}
-      .m-height25 {font-size:25px!important;line-height:25px!important;height:25px!important;}
-      .m-height30 {font-size:30px!important;line-height:30px!important;height:30px!important;}
-      .rwd-on-mobile {display: inline-block!important;padding: 5px;}
-      .center-on-mobile {text-align: center!important;}
+      .row-content {
+        width: 100% !important;
+      }
+
+      .stack .column {
+        width: 100%;
+        display: block;
+      }
     }
   </style>
-
 </head>
+<body style="background-color: #e0e0e0; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
 
-<body style="margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; width: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;" bgcolor="#f0f0f0">
-<table>
+<table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation"
+       style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #e0e0e0;" width="100%">
+  <tbody>
   <tr>
     <td>
-      <h1>{{ __('mail.Recovery Title') }}</h1>
-      <p>Hi {{ $name }}</p>
-      <p>Click the link to reset your password</p>
-      <p>{{ $token }}</p>
+
+      <!-- Top Area - Grey -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-1" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <!-- Conduit Header Area -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-2" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #52aacc; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="100%">
+                  <table border="0" cellpadding="30" cellspacing="0" class="text_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                    <tr>
+                      <td>
+                        <div style="font-family: Tahoma, Verdana, sans-serif">
+                          <div
+                            style="font-size: 14px; font-family: 'Ubuntu', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 16.8px; color: #ffffff; line-height: 1.2;">
+                            <p style="margin: 0; font-size: 14px; text-align: center;"><span
+                                style="font-size:42px;"><strong>Conduit</strong></span></p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+      <!-- Forgot Password Image Area -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="66.66666666666667%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td style="width:100%;padding-right:0px;padding-left:0px;">
+                        <div align="center" style="line-height:10px"><img
+                            src="https://i.ibb.co/Nn2cY3Z/forgotpassword2.png"
+                            style="display: block; height: auto; border: 0; width: 333px; max-width: 100%;"
+                            width="333"/></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+      <!-- Forgot Password Header Text -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="66.66666666666667%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="heading_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td
+                        style="width:100%;text-align:center;padding-top:40px;padding-right:40px;padding-bottom:15px;padding-left:40px;">
+                        <h1
+                          style="margin: 0; color: #777777; font-size: 22px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: normal; letter-spacing: normal; margin-top: 0; margin-bottom: 0;">
+                          <strong>Forgot your password?</strong></h1>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <!-- Forgot Password subtext -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-5" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="66.66666666666667%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                    <tr>
+                      <td style="padding-top:10px;padding-right:20px;padding-bottom:20px;padding-left:20px;">
+                        <div style="font-family: sans-serif">
+                          <div
+                            style="font-size: 14px; mso-line-height-alt: 16.8px; color: #9a9a9a; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
+                            <p style="margin: 0; font-size: 14px; text-align: center;">That's alright, it happens!<br/>Click
+                              the button below to reset your password.</p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+      <!-- Reset Password Button -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-6" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-bottom: 5px solid #52AACC; border-left: 0px solid #52AACC; border-right: 0px solid #52AACC; border-top: 0px solid #52AACC;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px solid #52AACC; border-right: 0px solid #52AACC; border-bottom: 5px solid #52AACC; border-left: 0px solid #52AACC;"
+                    width="66.66666666666667%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="button_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td
+                        style="text-align:center;padding-top:10px;padding-right:10px;padding-bottom:50px;padding-left:10px;">
+                        <div align="center">
+                        <!--[if mso]>
+                          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="http://localhost/password-reset?tk={{ $token }}" style="height:52px;width:236px;v-text-anchor:middle;" arcsize="77%" stroke="false" fillcolor="#52aacc"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:16px"><![endif]-->
+                          <a href="http://localhost/password-reset?tk={{ $token }}"
+                             style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#52aacc;border-radius:40px;width:auto;border-top:1px solid #52aacc;border-right:1px solid #52aacc;border-bottom:1px solid #52aacc;border-left:1px solid #52aacc;padding-top:10px;padding-bottom:10px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;"
+                             target="_blank"><span
+                              style="padding-left:60px;padding-right:60px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
+                                style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">Reset Password</span></span></a>
+                          <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px solid #52AACC; border-right: 0px solid #52AACC; border-bottom: 5px solid #52AACC; border-left: 0px solid #52AACC;"
+                    width="16.666666666666668%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <div></div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
+      <!-- Received in Error Subtext -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-7" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="text_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                    <tr>
+                      <td>
+                        <div style="font-family: sans-serif">
+                          <div
+                            style="font-size: 14px; mso-line-height-alt: 16.8px; color: #acacac; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
+                            <p style="margin: 0; font-size: 14px; text-align: center;"><span style="font-size:12px;">If you believe you have received this email in error, please disregard it.</span>
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- Social Icons -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-8" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="100%">
+                  <table border="0" cellpadding="10" cellspacing="0" class="social_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+                    <tr>
+                      <td>
+                        <table align="center" border="0" cellpadding="0" cellspacing="0" class="social-table"
+                               role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="144px">
+                          <tr>
+                            <td style="padding:0 2px 0 2px;"><a href="https://www.facebook.com/" target="_blank"><img
+                                  alt="Facebook" height="32" src="https://i.ibb.co/cr3hd8K/facebook2x.png"
+                                  style="display: block; height: auto; border: 0;" title="Facebook" width="32"/></a>
+                            </td>
+                            <td style="padding:0 2px 0 2px;"><a href="https://twitter.com/" target="_blank"><img
+                                  alt="Twitter" height="32" src="https://i.ibb.co/d5PfYzd/instagram2x.png"
+                                  style="display: block; height: auto; border: 0;" title="Twitter" width="32"/></a></td>
+                            <td style="padding:0 2px 0 2px;"><a href="https://instagram.com/" target="_blank"><img
+                                  alt="Instagram" height="32" src="https://i.ibb.co/8rmLm15/linkedin2x.png"
+                                  style="display: block; height: auto; border: 0;" title="Instagram" width="32"/></a>
+                            </td>
+                            <td style="padding:0 2px 0 2px;"><a href="https://www.linkedin.com/" target="_blank"><img
+                                  alt="LinkedIn" height="32" src="https://i.ibb.co/b7Yh8gD/twitter2x.png"
+                                  style="display: block; height: auto; border: 0;" title="LinkedIn" width="32"/></a>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+      <!-- Footer Subtext -->
+      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-9" role="presentation"
+             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
+        <tbody>
+        <tr>
+          <td>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
+                   role="presentation"
+                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
+              <tbody>
+              <tr>
+                <td class="column"
+                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
+                    width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                    <tr>
+                      <td>
+                        <div style="font-family: sans-serif">
+                          <div
+                            style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #acacac; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
+                            <p style="margin: 0; font-size: 12px; text-align: center;">This email was sent from Conduit</p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  <table border="0" cellpadding="0" cellspacing="0" class="text_block" role="presentation"
+                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
+                    <tr>
+                      <td>
+                        <div style="font-family: sans-serif">
+                          <div
+                            style="font-size: 14px; mso-line-height-alt: 16.8px; color: #acacac; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
+                            <p style="margin: 0; font-size: 14px; text-align: center;"><span style="font-size:12px;">Conduit 2021</span>
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+
+
     </td>
   </tr>
+  </tbody>
 </table>
-
 </body>
 </html>
