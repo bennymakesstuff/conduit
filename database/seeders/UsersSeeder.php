@@ -29,8 +29,6 @@ class UsersSeeder extends Seeder
           'lastname' => env('SEED_ADMIN_LASTNAME'),
           'uuid' => $uuid,
           'roles' => "[]",
-          'dolibarr_last_login' => null,
-          'dolibarr_last_sync' => null
         ]);
     }
 }

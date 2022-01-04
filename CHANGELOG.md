@@ -4,6 +4,20 @@ This project provides a central API and Dashboard for communication between appl
 
 ## [Unreleased]
 ### Adds
+- Laravel Cashier (Stripe)
+### Changes
+### Removes
+### Fixes
+
+## [v0.2.0]
+### Adds
+### Changes
+### Removes
+- Finch Project references and code
+### Fixes
+
+## [v0.1.0]
+### Adds
 - Initial Project Setup
 - Dolibarr database configuration
 - Conduit database configuration

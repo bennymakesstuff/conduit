@@ -15,6 +15,7 @@ return [
 
   'Welcome' => 'Welcome',
   'Welcome Paragraph' => 'Thanks for signing up',
-  'Welcome Title' => 'Welcome to Finch'
+  'Welcome Title' => 'Welcome to Conduit',
+  'Recovery Title' => 'Recover your account'
 
 ];
