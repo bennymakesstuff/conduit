@@ -153,67 +153,6 @@
       </table>
 
 
-
-      <!-- Forgot Password Image Area -->
-      <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-3" role="presentation"
-             style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tbody>
-        <tr>
-          <td>
-            <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack"
-                   role="presentation"
-                   style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 500px;" width="500">
-              <tbody>
-              <tr>
-                <td class="column"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="16.666666666666668%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                    <tr>
-                      <td>
-                        <div></div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td class="column"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="66.66666666666667%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="image_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                    <tr>
-                      <td style="width:100%;padding-right:0px;padding-left:0px;">
-                        <div align="center" style="line-height:10px"><img
-                            src="https://i.ibb.co/Nn2cY3Z/forgotpassword2.png"
-                            style="display: block; height: auto; border: 0; width: 333px; max-width: 100%;"
-                            width="333"/></div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-                <td class="column"
-                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #f9f9f9; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                    width="16.666666666666668%">
-                  <table border="0" cellpadding="0" cellspacing="0" class="empty_block" role="presentation"
-                         style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                    <tr>
-                      <td>
-                        <div></div>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-
-
-
       <!-- Forgot Password Header Text -->
       <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation"
              style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
@@ -247,7 +186,7 @@
                         style="width:100%;text-align:center;padding-top:40px;padding-right:40px;padding-bottom:15px;padding-left:40px;">
                         <h1
                           style="margin: 0; color: #777777; font-size: 22px; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 120%; text-align: center; direction: ltr; font-weight: normal; letter-spacing: normal; margin-top: 0; margin-bottom: 0;">
-                          <strong>Forgot your password?</strong></h1>
+                          <strong>Password Reset Successful</strong></h1>
                       </td>
                     </tr>
                   </table>
@@ -306,8 +245,8 @@
                         <div style="font-family: sans-serif">
                           <div
                             style="font-size: 14px; mso-line-height-alt: 16.8px; color: #9a9a9a; line-height: 1.2; font-family: Arial, Helvetica Neue, Helvetica, sans-serif;">
-                            <p style="margin: 0; font-size: 14px; text-align: center;">That's alright, it happens!<br/>Click
-                              the button below to reset your password.</p>
+                            <p style="margin: 0; font-size: 14px; text-align: center;">Hi {{ name }}<br/>Your password has been successfully reset.</p>
+                            <p style="margin: 0; font-size: 14px; text-align: center;">Click the below button to login.</p>
                           </div>
                         </div>
                       </td>
@@ -374,7 +313,7 @@
                              style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#52aacc;border-radius:40px;width:auto;border-top:1px solid #52aacc;border-right:1px solid #52aacc;border-bottom:1px solid #52aacc;border-left:1px solid #52aacc;padding-top:10px;padding-bottom:10px;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;"
                              target="_blank"><span
                               style="padding-left:60px;padding-right:60px;font-size:16px;display:inline-block;letter-spacing:normal;"><span
-                                style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">Reset Password</span></span></a>
+                                style="font-size: 16px; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;">Login</span></span></a>
                           <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
                         </div>
                       </td>

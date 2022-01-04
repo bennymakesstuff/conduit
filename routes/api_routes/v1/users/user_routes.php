@@ -29,6 +29,12 @@ Route::post('/recover-account', [AuthController::class, 'recoverAccount'])
   ->name('recover-account');
 
 /**
+ * Reset password
+ */
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+  ->name('reset-password');
+
+/**
  * Returns a message for unsuccessful authentication
  */
 Route::get('/login-unsuccessful', function (Request $request)
