@@ -100,7 +100,9 @@ class AuthController extends Controller
 
     // Try to fetch the user and create a bearer token to send back
     try {
-      $user = (new User)->where('email', $request->get('email'))->firstOrFail();
+      /** @var User $user */
+      $user = (new User)->where('email', $request->get('email'))->first();
+
       $token = $user->createToken('auth_token')->plainTextToken;
 
       return response()->json([
@@ -114,6 +116,21 @@ class AuthController extends Controller
         'message' => 'Could not login user.'
       ], 200);
     }
+  }
+
+  /**
+   * Logs the user in with a Token and returns the user details
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function tokenLogin(Request $request)
+  {
+    // TODO Create a security record of login
+    return response()->json([
+      'status' => true,
+      'user' => $request->user()->toJson(),
+      'message' => "Token Valid 😊",
+    ]);
   }
 
 
