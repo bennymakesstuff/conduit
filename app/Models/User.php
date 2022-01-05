@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Builder;
@@ -65,4 +68,34 @@ class User extends Authenticatable
     'roles' => 'array'
   ];
 
+
+
+  public static function boot()
+  {
+    parent::boot();
+
+    self::creating(function($model){
+      // ... code here
+    });
+
+    self::created(function($model){
+
+    });
+
+    self::updating(function($model){
+      // ... code here
+    });
+
+    self::updated(function($model){
+      // ... code here
+    });
+
+    self::deleting(function($model){
+      // ... code here
+    });
+
+    self::deleted(function($model){
+      // ... code here
+    });
+  }
 }
