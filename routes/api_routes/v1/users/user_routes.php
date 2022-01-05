@@ -17,6 +17,12 @@ Route::post('/register', [AuthController::class, 'register'])
   ->name('register');
 
 /**
+ * Authenticates the user by token and returns the user
+ */
+Route::middleware('auth:sanctum')->post('/token-login', [AuthController::class, 'tokenLogin'])
+  ->name('token-login');
+
+/**
  * Logs the user in with the provided details
  */
 Route::post('/login', [AuthController::class, 'login'])
@@ -51,7 +57,7 @@ Route::get('/login-unsuccessful', function (Request $request)
 Route::middleware('auth:sanctum')
   ->get('/user/details', function (Request $request)
   {
-    return $request->user();
+    return $request->user()->toJson();
   });
 
 /**
