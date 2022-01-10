@@ -4,10 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePermissionsRequest;
 use App\Http\Requests\UpdatePermissionsRequest;
+use App\Models\PermissionGroups;
 use App\Models\Permissions;
 
 class PermissionsController extends Controller
 {
+
+   /**
+    * Returns a list of all permissions
+    *
+    * @return string
+    */
+    public function getPermissions(): string
+    {
+      $permissions = Permissions::all();
+
+      if ($permissions === null) {
+        return response()->json([
+          'status' => false,
+          'title' => 'PERMISSIONS',
+          'message' => 'No Permissions Available'
+        ]);
+      }
+
+      /** @var Permissions $permission */
+      foreach ($permissions as $permission) {
+
+        $group = PermissionGroups::query()
+          ->find($permission->getAttribute('permission_group'));
+        $permission['permission_group'] = $group;
+      }
+
+      return json_encode([
+        'status' => true,
+        'title' => 'PERMISSIONS',
+        'permissions' => $permissions
+      ]);
+    }
+
     /**
      * Display a listing of the resource.
      *

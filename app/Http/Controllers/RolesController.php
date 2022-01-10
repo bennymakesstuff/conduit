@@ -9,6 +9,31 @@ use App\Models\Roles;
 class RolesController extends Controller
 {
     /**
+     * Returns a list of all roles
+     *
+     * @return string
+     */
+    public function getRoles(): string
+    {
+      $roles = Roles::all();
+
+      if ($roles === null) {
+        return response()->json([
+          'status' => false,
+          'title' => 'ROLES',
+          'message' => 'No Roles Available'
+        ]);
+      }
+
+      return json_encode([
+        'status' => true,
+        'title' => 'ROLES',
+        'roles' => $roles
+      ]);
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

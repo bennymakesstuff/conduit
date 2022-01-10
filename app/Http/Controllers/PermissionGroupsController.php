@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePermissionGroupsRequest;
 use App\Http\Requests\UpdatePermissionGroupsRequest;
 use App\Models\PermissionGroups;
+use App\Models\Roles;
 
 class PermissionGroupsController extends Controller
 {

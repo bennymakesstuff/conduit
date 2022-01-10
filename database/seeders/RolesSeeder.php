@@ -18,15 +18,22 @@ class RolesSeeder extends Seeder
     public function run()
     {
       $uuid_factory = Uuid::getFactory();
-      $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
 
-      // Create the Main Admin User
-      DB::table('roles')->insert([
-        'uuid' => $uuid,
+      // User arrays
+      $users[] = [
+        'uuid' => null,
         'title' => 'Super Admin',
         'description' => 'Has access to everything',
         'active' => true,
         'permissions' => null,
-      ]);
+      ];
+
+      // Iterate through the users array and insert
+      foreach ($users as $user) {
+        $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
+        $user['uuid'] = $uuid;
+        DB::table('roles')->insert($user);
+      }
+
     }
 }
