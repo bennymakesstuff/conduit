@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRolesRequest;
 use App\Http\Requests\UpdateRolesRequest;
 use App\Models\Roles;
+use DateTime;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Uuid;
 
 class RolesController extends Controller
 {
@@ -30,6 +35,41 @@ class RolesController extends Controller
         'title' => 'ROLES',
         'roles' => $roles
       ]);
+    }
+
+
+    public function createRole(Request $request)
+    {
+      $role = (object) $request->get('new_user');
+
+      try {
+        // Generate UUID
+        $uuid_factory = Uuid::getFactory();
+        $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
+
+        $new_role = new Roles();
+        $new_role->setAttribute('uuid', $uuid);
+        $new_role->setAttribute('title', $role->title);
+        $new_role->setAttribute('description', $role->description);
+        $new_role->setAttribute('active', true);
+        $new_role->setAttribute('group', $role->group);
+        $new_role->setAttribute('permissions', null); // TODO - Inject these permissions in correctly
+        $new_role->save();
+
+        return response()->json([
+          'status' => true,
+          'title' => 'ROLE CREATE',
+          'message' => 'Role created successfully'
+        ]);
+      }
+      catch (Exception $e) {
+        return response()->json([
+          'status' => false,
+          'title' => 'ROLE CREATE',
+          'message' => 'Could not create new role',
+          'error' => $e
+        ]);
+      }
     }
 
 

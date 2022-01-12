@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
       self::addAuditablesToTable($table);
       $table->string('title',50);
       $table->text('description')->nullable();
+      $table->text('group')->nullable();
       $table->boolean('active')->default(true);
       $table->jsonb('permissions')->nullable();
       $table->timestamps();

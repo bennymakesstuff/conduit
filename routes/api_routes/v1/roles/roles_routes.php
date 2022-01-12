@@ -18,3 +18,10 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth:sanctum')
   ->get('/roles', [RolesController::class, 'getRoles'])
   ->name('get-roles');
+
+/**
+ * Creates a new role
+ */
+Route::middleware('auth:sanctum')
+  ->post('/roles/create', [RolesController::class, 'createRole'])
+  ->name('create-role');
