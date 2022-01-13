@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->integer('mobile')->nullable();
+            $table->boolean('active')->default(true);
 
         });
     }

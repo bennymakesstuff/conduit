@@ -16,6 +16,30 @@ class UserController extends Controller
 {
 
   /**
+   * Returns a list of all roles
+   *
+   * @return string
+   */
+  public function getUsers(): string
+  {
+    $users = User::all();
+
+    if ($users === null) {
+      return response()->json([
+        'status' => false,
+        'title' => 'USERS',
+        'message' => 'No Users Available'
+      ]);
+    }
+
+    return json_encode([
+      'status' => true,
+      'title' => 'USERS',
+      'users' => $users
+    ]);
+  }
+
+  /**
    * Creates a new user from the provided details
    * @param Request $request
    * @return JsonResponse
@@ -31,6 +55,8 @@ class UserController extends Controller
       'firstname' => 'required|string|max:255',
       'lastname' => 'required|string|max:255',
     ]);
+
+    Log::info(json_encode($request->all()));
 
     // If the validation fails send back the reason
     if ($validator->fails()) {

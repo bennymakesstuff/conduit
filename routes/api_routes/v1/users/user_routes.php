@@ -77,3 +77,14 @@ Route::middleware('auth:sanctum')
   ->name('user-create');
 
 
+/**
+ * List all users
+ */
+Route::get('/users', [UserController::class, 'getUsers'])
+  ->name('users');
+
+/**
+ * Create a user
+ */
+Route::post('/users/create', [UserController::class, 'newUser'])
+  ->name('create-users');
