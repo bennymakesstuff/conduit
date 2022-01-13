@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermissionGroupsController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -17,3 +18,10 @@ use App\Http\Controllers\AuthController;
 Route::middleware('auth:sanctum')
   ->get('/permissions', [PermissionsController::class, 'getPermissions'])
   ->name('get-permissions');
+
+/**
+ * Returns a list of permission groups
+ */
+Route::middleware('auth:sanctum')
+  ->get('/permissions/groups', [PermissionGroupsController::class, 'getPermissionGroups'])
+  ->name('permission-groups-get');

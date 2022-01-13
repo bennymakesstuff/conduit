@@ -9,6 +9,30 @@ use App\Models\Roles;
 
 class PermissionGroupsController extends Controller
 {
+  /**
+   * Returns a list of permission groups
+   *
+   * @return string
+   */
+  public function getPermissionGroups(): string
+  {
+    $groups = Roles::all();
+
+    if ($groups === null) {
+      return response()->json([
+        'status' => false,
+        'title' => 'PERMISSION GROUPS',
+        'message' => 'No Groups Available'
+      ]);
+    }
+
+    return json_encode([
+      'status' => true,
+      'title' => 'PERMISSION GROUPS',
+      'permission_groups' => $groups,
+    ]);
+  }
+
     /**
      * Display a listing of the resource.
      *
