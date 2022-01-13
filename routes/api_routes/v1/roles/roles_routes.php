@@ -12,6 +12,14 @@ use App\Http\Controllers\AuthController;
 | V1 API Roles Routes
 |--------------------------------------------------------------------------
 */
+
+/**
+ * Returns a count of all roles
+ */
+Route::middleware('auth:sanctum')
+  ->get('/roles/count', [RolesController::class, 'getRolesCount'])
+  ->name('roles-count');
+
 /**
  * Returns a list of all roles
  */

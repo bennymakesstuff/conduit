@@ -84,6 +84,12 @@ Route::get('/users', [UserController::class, 'getUsers'])
   ->name('users');
 
 /**
+ * Count all users
+ */
+Route::get('/users/count', [UserController::class, 'getUserCount'])
+  ->name('users-count');
+
+/**
  * Create a user
  */
 Route::post('/users/create', [UserController::class, 'newUser'])

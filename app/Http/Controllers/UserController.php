@@ -14,9 +14,33 @@ use Ramsey\Uuid\Uuid;
 
 class UserController extends Controller
 {
+  /**
+   * Returns a count of all roles
+   *
+   * @return string
+   */
+  public function getUserCount(): string
+  {
+    $users = User::all('id');
+
+    if ($users === null) {
+      return response()->json([
+        'status' => false,
+        'title' => 'USERS',
+        'message' => 'No Users Available'
+      ]);
+    }
+
+    return json_encode([
+      'status' => true,
+      'title' => 'USERS',
+      'count' => $users->count()
+    ]);
+  }
+
 
   /**
-   * Returns a list of all roles
+   * Returns a list of all users
    *
    * @return string
    */
