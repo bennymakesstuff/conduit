@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Roles;
 use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,10 @@ class PermissionsSeeder extends Seeder
       include 'SeederData/Permissions.php',
       include 'SeederData/User.php',
       include 'SeederData/Roles.php',
+      include 'SeederData/Personal.php'
     ];
+
+    $full_permission_set = [];
 
     // Iterate through permission sets
     foreach ($permission_sets as $set) {
@@ -44,8 +48,22 @@ class PermissionsSeeder extends Seeder
         $permission['uuid'] = $uuid;
         $permission['permission_group'] = $group_id;
         DB::table('permissions')->insert($permission);
+
+        // Add the permission into the full permission set to save to the super user
+        $full_permission_set []= $permission['identifier'];
+
+        $super_role = DB::table('roles')
+          ->where('uuid', '=', env('SEED_SUPER_ROLE'))
+          ->update([
+            'permissions' => $full_permission_set
+            ]);
+
       }
 
     }
+
+
+
+
   }
 }

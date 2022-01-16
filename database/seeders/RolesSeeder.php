@@ -21,7 +21,8 @@ class RolesSeeder extends Seeder
 
       // User arrays
       $users[] = [
-        'uuid' => null,
+        'uuid_seed' => false,
+        'uuid' => env('SEED_SUPER_ROLE'),
         'title' => 'Super Admin',
         'description' => 'Has access to everything',
         'active' => true,
@@ -30,10 +31,15 @@ class RolesSeeder extends Seeder
 
       // Iterate through the users array and insert
       foreach ($users as $user) {
-        $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
-        $user['uuid'] = $uuid;
+        if (isset($user['uuid_seed']) && $user['uuid_seed'] === false) {
+          unset($user['uuid_seed']);
+        }
+        else {
+          unset($user['uuid_seed']);
+          $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
+          $user['uuid'] = $uuid;
+        }
         DB::table('roles')->insert($user);
       }
-
     }
 }

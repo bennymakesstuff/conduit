@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Roles;
 use App\Models\User;
+use App\Models\UserRoles;
 use DateTime;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -64,6 +68,34 @@ class UserController extends Controller
   }
 
   /**
+   * Returns a list of all users
+   *
+   * @return string
+   */
+  public function getSingleUser($uuid): string
+  {
+    $user = User::where('uuid', '=', $uuid)->first();
+
+    if ($user === null) {
+      return response()->json([
+        'status' => false,
+        'title' => 'USERS',
+        'message' => 'User not found'
+      ]);
+    }
+
+    // Save the users roles to the array
+    $returned_user = $user->toArray();
+    $returned_user['roles'] = $user->getRoles();
+
+    return json_encode([
+      'status' => true,
+      'title' => 'USERS',
+      'user' => $returned_user
+    ]);
+  }
+
+  /**
    * Creates a new user from the provided details
    * @param Request $request
    * @return JsonResponse
@@ -105,13 +137,12 @@ class UserController extends Controller
 
     // Build the new user
     $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
-
     $user = null;
-
     $user_data = $request->all();
 
     try {
 
+      // Create the new user
       $user = (new User)->create([
         'email' => $request['email'],
         'password' => Hash::make($request['password']),
@@ -119,6 +150,50 @@ class UserController extends Controller
         'lastname' => $request['lastname'],
         'uuid' => $uuid,
       ]);
+
+      // Add the id of the Authenticated user creating the new user if not system generated
+      if (Auth::id()) {
+        $user
+          ->setAttribute('created_by', Auth::id())
+          ->save();
+      }
+
+      // Add any selected roles to the user
+      if (!is_null($user_data['roles'] && count($user_data['roles']) > 0)) {
+        foreach($user_data['roles'] as $role) {
+          try {
+            $user_role_record = new UserRoles([
+              'created_by' => Auth::id(),
+              'user' => $user->uuid,
+              'role' => $role['uuid'],
+              'expires_at' => null,
+              'uuid' => $uuid_factory->fromDateTime(new DateTime('now'))
+            ]);
+            $user_role_record->save();
+            Log::channel('error_stack')->info($role['title']);
+          } catch (Exception $role_exception) {
+            $error = [
+              'status' => 'USER CREATE FAILED',
+              'message' => 'Failed to create new user',
+              'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
+              'exception_message' => $role_exception->getMessage(),
+              'uuid' => $user,
+              'data' => $user_data
+            ];
+
+            Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
+              $error['status'],
+              PHP_EOL.PHP_EOL,
+              $error['message'],
+              PHP_EOL.PHP_EOL,
+              $error['error_id'],
+              PHP_EOL.PHP_EOL,
+              $error['exception_message']
+            ));
+          }
+        }
+      }
+
 
       return response()->json([
         'status' => true,

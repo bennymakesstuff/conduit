@@ -27,7 +27,7 @@ class UsersSeeder extends Seeder
           'password' => Hash::make(env('SEED_ADMIN_PASSWORD')),
           'firstname' => env('SEED_ADMIN_FIRSTNAME'),
           'lastname' => env('SEED_ADMIN_LASTNAME'),
-          'uuid' => $uuid,
+          'uuid' => env('SEED_ADMIN_UUID'),
           'roles' => "[]",
         ]);
     }

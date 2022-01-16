@@ -16,7 +16,7 @@ class PermissionGroupsController extends Controller
    */
   public function getPermissionGroups(): string
   {
-    $groups = Roles::all();
+    $groups = PermissionGroups::all();
 
     if ($groups === null) {
       return response()->json([

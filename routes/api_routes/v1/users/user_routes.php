@@ -54,10 +54,19 @@ Route::get('/login-unsuccessful', function (Request $request)
 })->name('login-unsuccessful');
 
 
+//Route::middleware('auth:sanctum')
+//  ->get('/user/details', function (Request $request)
+//  {
+//    return $request->user()->toJson();
+//  });
+
 Route::middleware('auth:sanctum')
   ->get('/user/details', function (Request $request)
   {
-    return $request->user()->toJson();
+    $user = $request->user();
+    $permissions = $user->getPermissionSet();
+    $user->permissions = $permissions;
+    return $user;
   });
 
 /**
@@ -94,3 +103,9 @@ Route::get('/users/count', [UserController::class, 'getUserCount'])
  */
 Route::post('/users/create', [UserController::class, 'newUser'])
   ->name('create-users');
+
+/**
+ * List a single user
+ */
+Route::get('/users/{uuid}', [UserController::class, 'getSingleUser'])
+  ->name('users-single');

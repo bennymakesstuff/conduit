@@ -64,7 +64,7 @@ class RolesController extends Controller
 
     public function createRole(Request $request)
     {
-      $role = (object) $request->get('new_user');
+      $role = (object) $request->get('new_role');
 
       try {
         // Generate UUID
@@ -77,7 +77,7 @@ class RolesController extends Controller
         $new_role->setAttribute('description', $role->description);
         $new_role->setAttribute('active', true);
         $new_role->setAttribute('group', $role->group);
-        $new_role->setAttribute('permissions', null); // TODO - Inject these permissions in correctly
+        $new_role->setAttribute('permissions', json_encode($role->permissions));
         $new_role->save();
 
         return response()->json([
