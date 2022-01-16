@@ -115,3 +115,15 @@ Route::middleware('auth:sanctum')
  */
 Route::get('/users/{uuid}', [UserController::class, 'getSingleUser'])
   ->name('users-single');
+
+/**
+ * Add role to user
+ */
+Route::post('/users/add-role', [UserController::class, 'addRole'])
+  ->name('users-add-role');
+
+/**
+ * Remove role from user
+ */
+Route::get('/users/remove-role', [UserController::class, 'removeRole'])
+  ->name('users-remove-role');
