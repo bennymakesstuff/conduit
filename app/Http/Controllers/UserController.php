@@ -230,6 +230,139 @@ class UserController extends Controller
       ]);
     }
 
+  }
+
+
+
+
+
+
+  /**
+   * Updates a user from the provided details
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function updateUser(Request $request): JsonResponse
+  {
+    $uuid_factory = Uuid::getFactory();
+
+    // Validate the contents of the request
+    $validator = Validator::make($request->all(), [
+      'uuid' => 'required|string|max:36',
+      'user' => 'required'
+    ]);
+
+    // If the validation fails send back the reason
+    if ($validator->fails()) {
+
+      $error = [
+        'status' => false,
+        'title' => 'VALIDATION FAILED',
+        'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
+        'message' => 'The supplied data was not correct',
+      ];
+
+      Log::channel('discord')->info(sprintf('%s %s Message: %s %s ID: %s',
+        $error['status'],
+        PHP_EOL.PHP_EOL,
+        $error['message'],
+        PHP_EOL.PHP_EOL,
+        $error['error_id'],
+      ));
+
+      return response()->json($error);
+    }
+
+    // Update the user
+    $modified_user = $request['user'];
+
+    // Remove the roles data so it does not overwrite actual role information
+    if (isset($modified_user['roles'])) {
+      unset($modified_user['roles']);
+    }
+
+    try {
+
+      // TODO: Add these updated by fields where necessary
+      // $user_data['updated_by'] = Auth::id();
+
+      $user = User::query()
+        ->where('uuid', '=', $request['uuid'])
+        ->first();
+
+      if ($user) {
+
+        $user_array = $user->toArray();
+
+        $user_updates = [];
+
+        // Only updates values where columns exist
+        foreach ($modified_user as $key=>$value) {
+          if ($user->getConnection()
+            ->getSchemaBuilder()
+            ->hasColumn('users', $key)) {
+            $user_updates[$key] = $value;
+          }
+        }
+
+        // Remove the UUID as we never update that
+        unset($user_updates['uuid']);
+        
+        $user = User::query()
+          ->where('uuid', '=', $request['uuid'])
+          ->update($user_updates);
+
+        return response()->json([
+          'status' => true,
+          'title' => 'USER UPDATED',
+          'user' => $user
+        ]);
+      }
+      else {
+        $error = [
+          'status' => 'USER UPDATE FAILED',
+          'message' => 'Failed to update user',
+          'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
+          'exception_message' => 'No usr matching that ID',
+        ];
+
+        Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
+          $error['status'],
+          PHP_EOL.PHP_EOL,
+          $error['message'],
+          PHP_EOL.PHP_EOL,
+          $error['error_id'],
+          PHP_EOL.PHP_EOL,
+          $error['exception_message']
+        ));
+      }
+
+    } catch (PDOException $exception) {
+
+      $error = [
+        'status' => 'USER UPDATE FAILED',
+        'message' => 'Failed to update user',
+        'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
+        'exception_message' => $exception->getMessage(),
+      ];
+
+      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
+        $error['status'],
+        PHP_EOL.PHP_EOL,
+        $error['message'],
+        PHP_EOL.PHP_EOL,
+        $error['error_id'],
+        PHP_EOL.PHP_EOL,
+        $error['exception_message']
+      ));
+
+      return response()->json([
+        'status' => false,
+        'title' => $error['status'],
+        'error_id' => $error['error_id'],
+        'message' => $error['message']
+      ]);
+    }
 
   }
 }

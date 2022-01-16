@@ -85,7 +85,6 @@ Route::middleware('auth:sanctum')
   ->post('/user/create', [UserController::class, 'newUser'])
   ->name('user-create');
 
-
 /**
  * List all users
  */
@@ -103,6 +102,13 @@ Route::get('/users/count', [UserController::class, 'getUserCount'])
  */
 Route::post('/users/create', [UserController::class, 'newUser'])
   ->name('create-users');
+
+/**
+ * Updates a user in the database
+ */
+Route::middleware('auth:sanctum')
+  ->post('/users/update', [UserController::class, 'updateUser'])
+  ->name('user-update');
 
 /**
  * List a single user
