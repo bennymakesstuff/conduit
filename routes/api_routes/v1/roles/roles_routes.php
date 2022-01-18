@@ -32,4 +32,11 @@ Route::middleware('auth:sanctum')
  */
 Route::middleware('auth:sanctum')
   ->post('/roles/create', [RolesController::class, 'createRole'])
+  ->name('roles-single');
+
+/**
+ * Returns details of a single role
+ */
+Route::middleware('auth:sanctum')
+  ->get('/roles/{uuid}', [RolesController::class, 'getSingleRole'])
   ->name('create-role');

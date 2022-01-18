@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateRolesRequest;
 use App\Models\Roles;
 use DateTime;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Ramsey\Uuid\Uuid;
@@ -60,6 +61,34 @@ class RolesController extends Controller
         'roles' => $roles
       ]);
     }
+
+
+  /**
+   * Returns details of a single role
+   *
+   * @param $uuid
+   * @return string
+   */
+  public function getSingleRole($uuid): string
+  {
+    $role = Roles::where('uuid', '=', $uuid)->first();
+
+    $role->permissions = json_decode($role->permissions);
+
+    if ($role === null) {
+      return response()->json([
+        'status' => false,
+        'title' => 'ROLES',
+        'message' => 'Role not found'
+      ]);
+    }
+
+    return json_encode([
+      'status' => true,
+      'title' => 'ROLES',
+      'role' => $role
+    ]);
+  }
 
 
     public function createRole(Request $request)
