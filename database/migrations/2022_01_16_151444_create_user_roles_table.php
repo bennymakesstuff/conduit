@@ -17,6 +17,7 @@ class CreateUserRolesTable extends Migration
             self::addAuditablesToTable($table);
             $table->uuid('user');
             $table->uuid('role');
+            $table->timestamp('activates_at')->nullable();
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });

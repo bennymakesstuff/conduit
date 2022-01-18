@@ -11,13 +11,14 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @mixin Builder
  */
 class User extends Authenticatable
 {
-  use HasApiTokens, HasFactory, Notifiable, Billable;
+  use HasApiTokens, HasFactory, Notifiable, Billable, SoftDeletes;
 
   /**
    * The attributes that are mass assignable.

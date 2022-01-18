@@ -104,8 +104,12 @@ class UserController extends Controller
   {
     $uuid_factory = Uuid::getFactory();
 
+    $user_details = $request->get('user');
+
+    Log::warning(json_encode($user_details));
+
     // Validate the contents of the request
-    $validator = Validator::make($request->all(), [
+    $validator = Validator::make($user_details, [
       'email' => 'required|string|email|max:255',
       'password' => 'required|string|min:8',
       'firstname' => 'required|string|max:255',
@@ -138,16 +142,15 @@ class UserController extends Controller
     // Build the new user
     $uuid = $uuid_factory->fromDateTime(new DateTime('now'));
     $user = null;
-    $user_data = $request->all();
 
     try {
 
       // Create the new user
       $user = (new User)->create([
-        'email' => $request['email'],
-        'password' => Hash::make($request['password']),
-        'firstname' => $request['firstname'],
-        'lastname' => $request['lastname'],
+        'email' => $user_details['email'],
+        'password' => Hash::make($user_details['password']),
+        'firstname' => $user_details['firstname'],
+        'lastname' => $user_details['lastname'],
         'uuid' => $uuid,
       ]);
 
@@ -159,8 +162,8 @@ class UserController extends Controller
       }
 
       // Add any selected roles to the user
-      if (!is_null($user_data['roles'] && count($user_data['roles']) > 0)) {
-        foreach($user_data['roles'] as $role) {
+      if (!is_null($user_details['roles'] && count($user_details['roles']) > 0)) {
+        foreach($user_details['roles'] as $role) {
           try {
             $user_role_record = new UserRoles([
               'created_by' => Auth::id(),
@@ -178,7 +181,7 @@ class UserController extends Controller
               'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
               'exception_message' => $role_exception->getMessage(),
               'uuid' => $user,
-              'data' => $user_data
+              'data' => $user_details
             ];
 
             Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
@@ -209,7 +212,7 @@ class UserController extends Controller
         'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'exception_message' => $exception->getMessage(),
         'uuid' => $user,
-        'data' => $user_data
+        'data' => $user_details
       ];
 
       Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
@@ -451,6 +454,91 @@ class UserController extends Controller
           $error['exception_message']
         ));
       }
+
+    } catch (PDOException $exception) {
+
+      $error = [
+        'status' => 'USER UPDATE FAILED',
+        'message' => 'Failed to update user',
+        'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
+        'exception_message' => $exception->getMessage(),
+      ];
+
+      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
+        $error['status'],
+        PHP_EOL.PHP_EOL,
+        $error['message'],
+        PHP_EOL.PHP_EOL,
+        $error['error_id'],
+        PHP_EOL.PHP_EOL,
+        $error['exception_message']
+      ));
+
+      return response()->json([
+        'status' => false,
+        'title' => $error['status'],
+        'error_id' => $error['error_id'],
+        'message' => $error['message']
+      ]);
+    }
+
+  }
+
+
+
+
+
+  /**
+   * Removes a role from a user
+   * @param Request $request
+   * @return JsonResponse
+   */
+  public function removeRole(Request $request): JsonResponse
+  {
+    $uuid_factory = Uuid::getFactory();
+
+    // Validate the contents of the request
+    $validator = Validator::make($request->all(), [
+      'user' => 'required|string|max:36',
+      'role' => 'required|string|max:36'
+    ]);
+
+    // If the validation fails send back the reason
+    if ($validator->fails()) {
+
+      $error = [
+        'status' => false,
+        'title' => 'VALIDATION FAILED',
+        'error_id' => 'USER-ROLE|' . $uuid_factory->fromDateTime(new DateTime('now')),
+        'message' => 'The supplied data was not correct',
+      ];
+
+      Log::channel('discord')->info(sprintf('%s %s Message: %s %s ID: %s',
+        $error['status'],
+        PHP_EOL.PHP_EOL,
+        $error['message'],
+        PHP_EOL.PHP_EOL,
+        $error['error_id'],
+      ));
+
+      return response()->json($error);
+    }
+
+    try {
+
+      // TODO: Add these updated by fields where necessary
+      // $user_data['updated_by'] = Auth::id();
+
+      $user_roles = UserRoles::query()
+        ->where('user', '=', $request['user'])
+        ->where('role', '=', $request['role'])
+        ->update(['deleted_at' => new DateTime('now')]);
+
+        return response()->json([
+          'status' => true,
+          'title' => 'USER UPDATED',
+          'response' => 'Success'
+        ]);
 
     } catch (PDOException $exception) {
 

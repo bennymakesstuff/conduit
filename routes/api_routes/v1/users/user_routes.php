@@ -125,5 +125,5 @@ Route::post('/users/add-role', [UserController::class, 'addRole'])
 /**
  * Remove role from user
  */
-Route::get('/users/remove-role', [UserController::class, 'removeRole'])
+Route::post('/users/remove-role', [UserController::class, 'removeRole'])
   ->name('users-remove-role');
