@@ -151,6 +151,7 @@ class UserController extends Controller
         'password' => Hash::make($user_details['password']),
         'firstname' => $user_details['firstname'],
         'lastname' => $user_details['lastname'],
+        'phone' => $user_details['phone'] ?? null,
         'uuid' => $uuid,
       ]);
 
