@@ -88,19 +88,22 @@ Route::middleware('auth:sanctum')
 /**
  * List all users
  */
-Route::get('/users', [UserController::class, 'getUsers'])
+Route::middleware('auth:sanctum')
+  ->get('/users', [UserController::class, 'getUsers'])
   ->name('users');
 
 /**
  * Count all users
  */
-Route::get('/users/count', [UserController::class, 'getUserCount'])
+Route::middleware('auth:sanctum')
+  ->get('/users/count', [UserController::class, 'getUserCount'])
   ->name('users-count');
 
 /**
  * Create a user
  */
-Route::post('/users/create', [UserController::class, 'newUser'])
+Route::middleware('auth:sanctum')
+  ->post('/users/create', [UserController::class, 'newUser'])
   ->name('create-users');
 
 /**
@@ -113,17 +116,20 @@ Route::middleware('auth:sanctum')
 /**
  * List a single user
  */
-Route::get('/users/{uuid}', [UserController::class, 'getSingleUser'])
+Route::middleware('auth:sanctum')
+  ->get('/users/{uuid}', [UserController::class, 'getSingleUser'])
   ->name('users-single');
 
 /**
  * Add role to user
  */
-Route::post('/users/add-role', [UserController::class, 'addRole'])
+Route::middleware('auth:sanctum')
+  ->post('/users/add-role', [UserController::class, 'addRole'])
   ->name('users-add-role');
 
 /**
  * Remove role from user
  */
-Route::post('/users/remove-role', [UserController::class, 'removeRole'])
+Route::middleware('auth:sanctum')
+  ->post('/users/remove-role', [UserController::class, 'removeRole'])
   ->name('users-remove-role');
