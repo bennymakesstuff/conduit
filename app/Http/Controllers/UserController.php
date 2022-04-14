@@ -9,6 +9,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -70,6 +71,7 @@ class UserController extends Controller
   /**
    * Returns a list of all users
    *
+   * @param $uuid
    * @return string
    */
   public function getSingleUser($uuid): string
@@ -98,9 +100,9 @@ class UserController extends Controller
   /**
    * Creates a new user from the provided details
    * @param Request $request
-   * @return JsonResponse
+   * @return void
    */
-  public function newUser(Request $request): JsonResponse
+  public function newUser(Request $request): void
   {
     $uuid_factory = Uuid::getFactory();
 
@@ -120,23 +122,14 @@ class UserController extends Controller
 
     // If the validation fails send back the reason
     if ($validator->fails()) {
-
       $error = [
         'status' => false,
         'title' => 'VALIDATION FAILED',
         'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'message' => 'The supplied data was not correct',
+
       ];
-
-      Log::channel('discord')->info(sprintf('%s %s Message: %s %s ID: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-      ));
-
-      return response()->json($error);
+      $this->returnError($error);
     }
 
     // Build the new user
@@ -184,23 +177,12 @@ class UserController extends Controller
               'uuid' => $user,
               'data' => $user_details
             ];
-
-            Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-              $error['status'],
-              PHP_EOL.PHP_EOL,
-              $error['message'],
-              PHP_EOL.PHP_EOL,
-              $error['error_id'],
-              PHP_EOL.PHP_EOL,
-              $error['exception_message']
-            ));
+          $this->returnError($error);
           }
         }
       }
 
-
-      return response()->json([
-        'status' => true,
+      $this->returnSuccess([
         'title' => 'USER CREATED',
         'user' => $user
       ]);
@@ -215,38 +197,18 @@ class UserController extends Controller
         'uuid' => $user,
         'data' => $user_details
       ];
-
-      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-        PHP_EOL.PHP_EOL,
-        $error['exception_message']
-      ));
-
-      return response()->json([
-        'status' => false,
-        'title' => $error['status'],
-        'error_id' => $error['error_id'],
-        'message' => $error['message']
-      ]);
+      $this->returnError($error);
     }
-
   }
-
-
-
 
 
 
   /**
    * Updates a user from the provided details
    * @param Request $request
-   * @return JsonResponse
+   * @return void
    */
-  public function updateUser(Request $request): JsonResponse
+  public function updateUser(Request $request): void
   {
     $uuid_factory = Uuid::getFactory();
 
@@ -265,16 +227,7 @@ class UserController extends Controller
         'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'message' => 'The supplied data was not correct',
       ];
-
-      Log::channel('discord')->info(sprintf('%s %s Message: %s %s ID: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-      ));
-
-      return response()->json($error);
+      $this->returnError($error);
     }
 
     // Update the user
@@ -286,7 +239,6 @@ class UserController extends Controller
     }
 
     try {
-
       // TODO: Add these updated by fields where necessary
       // $user_data['updated_by'] = Auth::id();
 
@@ -295,9 +247,7 @@ class UserController extends Controller
         ->first();
 
       if ($user) {
-
         $user_array = $user->toArray();
-
         $user_updates = [];
 
         // Only updates values where columns exist
@@ -316,8 +266,7 @@ class UserController extends Controller
           ->where('uuid', '=', $request['uuid'])
           ->update($user_updates);
 
-        return response()->json([
-          'status' => true,
+        $this->returnSuccess([
           'title' => 'USER UPDATED',
           'user' => $user
         ]);
@@ -329,18 +278,8 @@ class UserController extends Controller
           'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
           'exception_message' => 'No usr matching that ID',
         ];
-
-        Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-          $error['status'],
-          PHP_EOL.PHP_EOL,
-          $error['message'],
-          PHP_EOL.PHP_EOL,
-          $error['error_id'],
-          PHP_EOL.PHP_EOL,
-          $error['exception_message']
-        ));
+        $this->returnError($error);
       }
-
     } catch (PDOException $exception) {
 
       $error = [
@@ -349,25 +288,8 @@ class UserController extends Controller
         'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'exception_message' => $exception->getMessage(),
       ];
-
-      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-        PHP_EOL.PHP_EOL,
-        $error['exception_message']
-      ));
-
-      return response()->json([
-        'status' => false,
-        'title' => $error['status'],
-        'error_id' => $error['error_id'],
-        'message' => $error['message']
-      ]);
+      $this->returnError($error);
     }
-
   }
 
 
@@ -375,9 +297,9 @@ class UserController extends Controller
   /**
    * Adds a role to a user
    * @param Request $request
-   * @return JsonResponse
+   * @return void
    */
-  public function addRole(Request $request): JsonResponse
+  public function addRole(Request $request): void
   {
     $uuid_factory = Uuid::getFactory();
 
@@ -389,27 +311,16 @@ class UserController extends Controller
 
     // If the validation fails send back the reason
     if ($validator->fails()) {
-
       $error = [
         'status' => false,
         'title' => 'VALIDATION FAILED',
         'error_id' => 'USER-ROLE|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'message' => 'The supplied data was not correct',
       ];
-
-      Log::channel('discord')->info(sprintf('%s %s Message: %s %s ID: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-      ));
-
-      return response()->json($error);
+      $this->returnError($error);
     }
 
     try {
-
       // TODO: Add these updated by fields where necessary
       // $user_data['updated_by'] = Auth::id();
 
@@ -428,11 +339,9 @@ class UserController extends Controller
           'role' => $request['role'],
           'uuid' => $uuid_factory->fromDateTime(new DateTime('now')),
         ]);
-
         $user_role->save();
 
-        return response()->json([
-          'status' => true,
+        $this->returnSuccess([
           'title' => 'USER UPDATED',
           'user' => $user_role
         ]);
@@ -444,16 +353,7 @@ class UserController extends Controller
           'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
           'exception_message' => 'No usr matching that ID',
         ];
-
-        Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-          $error['status'],
-          PHP_EOL.PHP_EOL,
-          $error['message'],
-          PHP_EOL.PHP_EOL,
-          $error['error_id'],
-          PHP_EOL.PHP_EOL,
-          $error['exception_message']
-        ));
+        $this->returnError($error);
       }
 
     } catch (PDOException $exception) {
@@ -464,37 +364,17 @@ class UserController extends Controller
         'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'exception_message' => $exception->getMessage(),
       ];
-
-      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-        PHP_EOL.PHP_EOL,
-        $error['exception_message']
-      ));
-
-      return response()->json([
-        'status' => false,
-        'title' => $error['status'],
-        'error_id' => $error['error_id'],
-        'message' => $error['message']
-      ]);
+      $this->returnError($error);
     }
-
   }
-
-
-
 
 
   /**
    * Removes a role from a user
    * @param Request $request
-   * @return JsonResponse
+   * @return void
    */
-  public function removeRole(Request $request): JsonResponse
+  public function removeRole(Request $request): void
   {
     $uuid_factory = Uuid::getFactory();
 
@@ -513,16 +393,7 @@ class UserController extends Controller
         'error_id' => 'USER-ROLE|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'message' => 'The supplied data was not correct',
       ];
-
-      Log::channel('discord')->info(sprintf('%s %s Message: %s %s ID: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-      ));
-
-      return response()->json($error);
+      $this->returnError($error);
     }
 
     try {
@@ -535,11 +406,10 @@ class UserController extends Controller
         ->where('role', '=', $request['role'])
         ->update(['deleted_at' => new DateTime('now')]);
 
-        return response()->json([
-          'status' => true,
-          'title' => 'USER UPDATED',
-          'response' => 'Success'
-        ]);
+      $this->returnSuccess([
+        'title' => 'USER UPDATED',
+        'response' => 'Success'
+      ]);
 
     } catch (PDOException $exception) {
 
@@ -549,28 +419,110 @@ class UserController extends Controller
         'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
         'exception_message' => $exception->getMessage(),
       ];
-
-      Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
-        $error['status'],
-        PHP_EOL.PHP_EOL,
-        $error['message'],
-        PHP_EOL.PHP_EOL,
-        $error['error_id'],
-        PHP_EOL.PHP_EOL,
-        $error['exception_message']
-      ));
-
-      return response()->json([
-        'status' => false,
-        'title' => $error['status'],
-        'error_id' => $error['error_id'],
-        'message' => $error['message']
-      ]);
+      $this->returnError($error);
     }
-
   }
 
 
+ /**
+   * Upload a Profile Image for a User
+   * @param Request $request
+   * @return void
+   */
+  public function profileImage(Request $request): void
+  {
 
+    $uuid_factory = Uuid::getFactory();
 
+    // Validate the contents of the request
+    $validator = Validator::make($request->all(), [
+      'images' => 'mimetype:jpeg,png,jpg,gif,svg',
+      'user' => 'required|string|max:36',
+    ]);
+
+    // If the validation fails send back the reason
+    if ($validator->fails()) {
+      $error = [
+        'status' => false,
+        'title' => 'IMAGE UPLOAD FAILED',
+        'error_id' => 'USER-PROFILE-IMAGE|' . $uuid_factory->fromDateTime(new DateTime('now')),
+        'message' => 'The supplied image was not correct in format or size',
+      ];
+
+      $this->returnError($error);
+    }
+
+    try {
+      /** @var UploadedFile $file */
+      $file = $request->file('image');
+
+      /** @var User $user */
+      $user = $request->user();
+
+      Log::info($request['user']);
+      // TODO: Create an imageProcessorClass that processes the profile image and stores is correctly.
+      $file->move('images/' . $request['user'] . '/', 'profile.' . $file->extension());
+
+      $this->returnSuccess([
+        'title' => 'PROFILE-IMAGE-UPLOADED',
+        'message' => 'Successfully uploaded profile image'
+      ]);
+
+    } catch (PDOException $exception) {
+
+      $error = [
+        'status' => 'PROFILE IMAGE UPLOAD FAILED',
+        'message' => 'Failed to upload profile image',
+        'error_id' => 'USER|' . $uuid_factory->fromDateTime(new DateTime('now')),
+        'exception_message' => $exception->getMessage(),
+      ];
+
+      $this->returnError($error);
+    }
+  }
+
+  /**
+   * Returns a success response from the API
+   * @param array $success
+   * @return JsonResponse
+   */
+  public function returnSuccess(array $success): JsonResponse
+  {
+    $response = array_merge($success, ['status' => true, $success]);
+    return response()->json($response);
+  }
+
+  /**
+   * Returns an error response from the API
+   * @param array $error
+   * @return JsonResponse
+   */
+  public function returnError(array $error): JsonResponse
+  {
+
+    if (!array_key_exists('exception_message', $error)) {
+      $error['exception_message'] = 'Non Exception Error';
+    }
+
+    if (!array_key_exists('error_id', $error)) {
+      $error['exception_message'] = 'No Error ID';
+    }
+
+    Log::channel('error_stack')->error(sprintf('%s %s Message: %s %s ID: %s %s Exception: %s',
+      $error['status'],
+      PHP_EOL.PHP_EOL,
+      $error['message'],
+      PHP_EOL.PHP_EOL,
+      $error['error_id'],
+      PHP_EOL.PHP_EOL,
+      $error['exception_message']
+    ));
+
+    return response()->json([
+      'status' => false,
+      'title' => $error['status'],
+      'error_id' => $error['error_id'],
+      'message' => $error['message']
+    ]);
+  }
 }

@@ -69,7 +69,22 @@ class User extends Authenticatable
     'email_verified_at' => 'datetime',
     'roles' => 'array'
   ];
+  /**
+   * @var Builder[]|\Illuminate\Database\Eloquent\Collection|mixed
+   */
+  private $preferences;
 
+
+  /**
+   * Returns the users preferences
+   */
+  public function getPreferences() {
+    $preferences = UserSettings::query()
+      ->where('user', '=', $this->uuid)
+      ->get();
+
+    return $preferences;
+  }
 
   /**
    * Returns a list of associated roles for the user

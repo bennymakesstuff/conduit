@@ -75,7 +75,10 @@ Route::middleware('auth:sanctum')
 Route::middleware('auth:sanctum')
   ->get('/user', function (Request $request)
 {
-    return $request->user();
+  $user = $request->user();
+  $response_user = $user;
+  $response_user->preferences = $user->getPreferences();
+  return $response_user;
 });
 
 /**
@@ -133,3 +136,11 @@ Route::middleware('auth:sanctum')
 Route::middleware('auth:sanctum')
   ->post('/users/remove-role', [UserController::class, 'removeRole'])
   ->name('users-remove-role');
+
+/**
+ * Upload User Profile Picture
+ */
+Route::middleware('auth:sanctum')
+  ->post('/users/profile-image', [UserController::class, 'profileImage'])
+  ->name('users-profile-image');
+
